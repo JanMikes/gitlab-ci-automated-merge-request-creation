@@ -1,0 +1,1 @@
+# gitlab-ci-automated-merge-request-creation
