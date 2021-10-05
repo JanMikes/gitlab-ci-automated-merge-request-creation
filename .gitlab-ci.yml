@@ -1,0 +1,7 @@
+stages:
+  - merge-request
+
+create mr:
+  stage: merge-request
+  script:
+    - echo "Creating mr.."
