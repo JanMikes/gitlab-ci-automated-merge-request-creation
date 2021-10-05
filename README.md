@@ -3,7 +3,11 @@
 Gitlab CI demo, to automatically create MR when first time pushed to a branch without MR with correct target branch by *some* logic.
 
 ## How it works
-TBD
+
+- Must be pipeline for branches (except merge_request) 
+- Determine parent (https://stackoverflow.com/questions/3161204/how-to-find-the-nearest-parent-of-a-git-branch)
+- Check if MR exists for branch (https://docs.gitlab.com/ee/api/merge_requests.html#list-merge-requests)
+- If not, create MR (https://docs.gitlab.com/ee/api/merge_requests.html#create-mr-pipeline)
 
 ## Motivation
 
