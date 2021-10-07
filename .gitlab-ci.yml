@@ -5,11 +5,10 @@ create mr:
   stage: merge-request
   rules:
       - if: $CI_OPEN_MERGE_REQUESTS == null
-  script:
+  before_script:
       # Install jq (https://stedolan.github.io/jq/download/)
       - apt-get update -y && apt-get install -y jq
-
-      - merge_requests_count=$(./count-branch-merge-requests.sh)
-
-      # Early exit if > 0 merge requests for branch exists
-      - if [[ $merge_requests_count -gt 0 ]]; then echo 'MR already opened, early termination' && exit 0; fi
+  script:
+      # Determine parent branch
+      - parent_branch=$(git show-branch | sed "s/].*//" | grep "\*" | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed "s/^.*\[//")
+      - echo $parent_branch
