@@ -4,4 +4,8 @@ stages:
 create mr:
   stage: merge-request
   script:
-    - echo "Creating mr.."
+      # Install jq (https://stedolan.github.io/jq/download/)
+      - apt-get update -y && apt-get install -y jq
+
+      - merge_requests_count=$(./count-branch-merge-requests.sh)
+      - echo $merge_requests_count
