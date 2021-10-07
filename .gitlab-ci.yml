@@ -9,18 +9,18 @@ create mr:
       # Install jq (https://stedolan.github.io/jq/download/)
       - apt-get update -y && apt-get install -y jq
   script:
-      # Determine parent branch
-      - git fetch --all
+      # Need all remote branches
+      - git fetch --no-tags
 
       ## Debug statement
       - git show-branch --remote
 
-      - parent_branch=$(git show-branch --remote | sed "s/].*//" | grep "++ \[" | head -n1 | sed "s/^.*\[origin\///")
+      - nearest_parent_branch=$(git show-branch --remote | sed "s/].*//" | grep "++ \[" | head -n1 | sed "s/^.*\[origin\///")
 
       ## Debug statement
-      - echo $parent_branch
+      - echo $nearest_parent_branch
 
-      - 'created_merge_request_response=$(curl -X POST --header "Authorization:Bearer ${PERSONAL_ACCESS_TOKEN}" --header "Content-Type: application/json" -d "{\"title\": \"Some random title\"}" "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/merge_requests?source_branch=${CI_COMMIT_BRANCH}&target_branch=${parent_branch}")'
+      - 'created_merge_request_response=$(curl -X POST --header "Authorization:Bearer ${PERSONAL_ACCESS_TOKEN}" --header "Content-Type: application/json" -d "{\"title\": \"Some random title\"}" "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/merge_requests?source_branch=${CI_COMMIT_BRANCH}&target_branch=${nearest_parent_branch}")'
 
-      - merge_request_url=$(echo $created_merge_request_response | jq '.web_url')
+      - merge_request_url=$(echo $created_merge_request_response | jq '.web_url' | tr -d '"')
       - 'echo "Created MR link: ${merge_request_url}"'
