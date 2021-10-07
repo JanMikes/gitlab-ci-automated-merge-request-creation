@@ -12,8 +12,8 @@ create mr:
       - apt-get update -y && apt-get install -y jq
   script:
       # Determine parent branch
+      - echo $CI_PRE_CLONE_SCRIPT
       - git fetch --all
       - git show-branch -a
-      - git log
       - parent_branch=$(git show-branch -a | sed "s/].*//" | grep "\*" | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed "s/^.*\[//")
       - echo $parent_branch
