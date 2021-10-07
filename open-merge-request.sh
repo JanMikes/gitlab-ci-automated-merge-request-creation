@@ -12,7 +12,7 @@ nearest_parent_branch=$(git show-branch --remote | sed "s/].*//" | grep "++ \[" 
 ## Debug statement
 echo $nearest_parent_branch
 
-created_merge_request_response=$(curl -X POST --header "Authorization:Bearer ${PERSONAL_ACCESS_TOKEN}" --header "Content-Type:application/json" -d '{"title":"'$CI_COMMIT_MESSAGE'"}' "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/merge_requests?source_branch=${CI_COMMIT_BRANCH}&target_branch=${nearest_parent_branch}")
+created_merge_request_response=$(curl -X POST --header "Authorization:Bearer ${PERSONAL_ACCESS_TOKEN}" --header "Content-Type:application/json" -d "{\"title\":\"$CI_COMMIT_MESSAGE\"}" "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/merge_requests?source_branch=${CI_COMMIT_BRANCH}&target_branch=${nearest_parent_branch}")
 
 ## Debug statement
 echo $created_merge_request_response
