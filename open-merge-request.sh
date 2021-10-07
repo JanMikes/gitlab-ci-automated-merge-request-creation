@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -x
 
 # Need all remote branches
 git fetch --no-tags
