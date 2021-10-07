@@ -3,6 +3,8 @@ stages:
 
 create mr:
   stage: merge-request
+  rules:
+      - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
   script:
       # Install jq (https://stedolan.github.io/jq/download/)
       - apt-get update -y && apt-get install -y jq
