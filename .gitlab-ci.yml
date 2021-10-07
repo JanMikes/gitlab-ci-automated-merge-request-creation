@@ -12,6 +12,7 @@ create mr:
       - apt-get update -y && apt-get install -y jq
   script:
       # Determine parent branch
+      - git fetch --all
       - echo $(git rev-parse --abbrev-ref HEAD)
       - git show-branch -a
       - parent_branch=$(git show-branch --remote | sed "s/].*//" | grep "++ \[" | head -n1 | sed "s/^.*\[origin\///")
