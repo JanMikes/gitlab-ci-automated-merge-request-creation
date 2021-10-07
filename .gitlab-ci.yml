@@ -3,6 +3,8 @@ stages:
 
 create mr:
   stage: merge-request
+  variables:
+    GIT_STRATEGY: clone
   rules:
       - if: $CI_OPEN_MERGE_REQUESTS == null
   before_script:
