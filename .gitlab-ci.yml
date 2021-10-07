@@ -10,4 +10,6 @@ create mr:
       - apt-get update -y && apt-get install -y jq
 
       - merge_requests_count=$(./count-branch-merge-requests.sh)
-      - echo $merge_requests_count
+
+      # Early exit if > 0 merge requests for branch exists
+      - if [[ $merge_requests_count -gt 0 ]]; then echo 'MR already opened, early termination' && exit 0; fi
