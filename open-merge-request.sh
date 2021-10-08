@@ -21,6 +21,6 @@ created_merge_request_response=$(curl -X POST --header "Authorization:Bearer ${P
 ## Debug
 echo $created_merge_request_response
 
-merge_request_url=$(echo $created_merge_request_response | jq '.web_url' | tr -d '"')
+merge_request_url=$(echo $created_merge_request_response | tr '\r\n' ' ' | jq '.web_url' | tr -d '"')
 
 echo "Created MR link: ${merge_request_url}"
