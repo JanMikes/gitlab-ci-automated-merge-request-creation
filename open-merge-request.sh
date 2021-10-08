@@ -11,7 +11,7 @@ nearest_parent_branch=$(git show-branch --remote | sed "s/].*//" | grep "++ \[" 
 ## Debug statement
 echo "Nearest parent branch: ${nearest_parent_branch}"
 
-request_body=$(jq -c -r -n --arg title "$CI_COMMIT_MESSAGE" '{title: $title}')
+request_body=$(jq -c -r -n --arg title "$(echo $CI_COMMIT_MESSAGE | head -n 1)" '{title: $title}')
 
 ## Debug
 echo $request_body
