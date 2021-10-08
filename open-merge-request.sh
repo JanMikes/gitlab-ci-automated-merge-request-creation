@@ -6,7 +6,7 @@ git fetch --no-tags
 ## Debug statement
 git show-branch --remote
 
-nearest_parent_branch=$(git show-branch --remote | sed "s/].*//" | grep "++ \[" | head -n1 | sed "s/^.*\[origin\///")
+nearest_parent_branch=$(git show-branch --remote | sed "s/].*//" | grep "++ \[" | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed "s/^.*\[origin\///")
 
 ## Debug statement
 echo "Nearest parent branch: ${nearest_parent_branch}"
